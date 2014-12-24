@@ -124,7 +124,7 @@ class Rational(n: Int, d: Int)<br/>
 
 <p>
 class Rational(n: Int, d: Int) {<br/>
-&#09;println(“Created “ + n + “/“ + d)<br/>
+&#09 println(“Created “ + n + “/“ + d)<br/>
 }<br/>
 </p>
 
@@ -184,4 +184,121 @@ require<br/>
 암시적 타입 변환<br/>
 &nbsp;ㄴ implicit def intoRational(x: Int) = new Rational(x)<br/>
 &nbsp;ㄴ 가능하면 21장에서 다루는 다른 암시 기법을 활용하는 것이 좋다.<br/>
+</p>
+
+
+7장. 내장 제어 구문
+===================
+- 스칼라가 제공하는 내장 제어구문: if, while, for, try, match, function call
+- 스칼라의 제어 구문 수가 적은 이유는 설계 초기 함수 리터럴을 포함했기 때문, 제어 구문 위에 다른 제어 구문을 하나하나 추가하기 보다는, 라이브러리에 제어 구문을 추가하는 편을 택함
+- 스칼라의 제어구문은 대부분 어떤 값을 결과로 내놓는다. 이는 프로그램 전체를 값을 계산하는 관점에서 바라보고, 프로그램 구성요소 또한 값을 도출해야 한다는 함수 언어적 접근을 채용한 결과다.
+- java와 스칼라의 차이점은 for, try, match가 값을 반환한다는 것에 있다. 스칼라는 제어구문들이 결과 값을 반환하기 때문에 임시변수가 필요 없다. 임시 변수를 만들어 계산한 값을 저장하는 과정이 없어지기 때문에 여러 가지 버그를 방지해준다. (Wow!!)
+
+if 표현식
+&nbsp;ㄴ 스칼라의 if는 다른 여러 언어와 마찬가지로 동
+&nbsp;ㄴ if 표현식은 값을 내놓기 때문에 임시 변수를 없앨 수 있다. (java 에서도 리터럴을 그냥 바로 리턴하면 동일한거 아닌가?)
+
+<p>
+var filename = "default.txt"<br/>
+if (!args.isEmpty)<br/>
+&#09 filename = args(0)<br/>
+</p>
+
+<p>
+val filename = if (!args.isEmpty) args(0) else "default.txt"<br/>
+</p>
+
+<p>
+여기서 중요한 것은 filename을 var가 아닌 val로 선언했다는 것이다. (함수적 스타일)<br>
+val을 사용함으로서 그 변수의 값이 결코 바뀌지 않음을 알려주고, 해당 변수의 값이 바뀌었는지를 찾아보기 위해 코드에서 그 변수의 모든 스코프를 다 뒤지는 일이 없게 해준다! (Wow!! @.@)<br>
+</p>
+
+<p>
+while 루프<br>
+&nbsp;ㄴ 여타 언어와 마찬가지로 동작<br>
+&nbsp;ㄴ condition이 참인 동안 본문을 반복 수행<br>
+&nbsp;ㄴ while과 do-while이 이루는 구조는 수행 결과가 특정 값을 반환하는 것이 아니기 때문에 표현식이라 하지 않고 '루프'라 부른다.<br>
+&nbsp;ㄴ 루프의 결과는 타입이 Unit 이다.<br>
+&nbsp;ㄴ 일반적으로, while 루프는 var 변수와 마찬가지로 최대한 이를 적게 사용하기 위해 노력할 것을 권장한다. (p.166)<br>
+</p>
+
+<p>
+Unit 타입<br>
+&nbsp;ㄴ 유니트 값(unit value) 밖에 없고, 이 값은 빈 괄호로 표기한다.<br>
+&nbsp;ㄴ ()라는 값이 존재한다는 점에서 자바의 void와 스칼라의 Unit는 다르다.<br>
+&nbsp;ㄴ println("hi") == () // true<br>
+</p>
+ 
+<p>
+for 표현식<br>
+&nbsp;ㄴ 스칼라의 for 표현식은 반복 처리를 위한 스위스 군용 만능 칼이라 할 수 있다. (맥가이버 칼이라고 쓰면 뭐라 할까봐 이렇게 표현한건가...-_-)<br>
+</p>
+
+<p>
+val files = (new java.io.File(".")).listFiles<br>
+for (file <- files)<br>
+&#09 println(file)<br>
+</p>
+
+<p>
+for (i <- 1 to 4)<br>
+&#09 println(i)<br>
+// 1, 2, 3, 4<br>
+</p>
+
+<p>
+for (i <- 1 until 4)<br>
+&#09 println(i)<br>
+// 1, 2, 3<br>
+</p>
+
+<p>
+이와 같이 스칼라에서는 간단하게 컬렉션을 직접 순회할 수 있다.<br/>
+컬렉션을 직접 순회하면 코드도 더욱 짧아지고 배열을 순회하면서 인덱스를 잘못 처리해 발생할 수 있는 실수를 피할 수 있다.<br/>
+인덱스를 0에서 시작할지, 1에서 시작할지, +1을 더할지, -1을 더할지, 마지막 순회에서 특별한 처리는 안해도 되는지 이런 질문을 아예 피할 수 있어 안전한 코드를 작성할 수 있다.<br/>
+(와....대박 ㅜㅜ 근데 순서대로 순회한다는 보장은 있겠지? javascript의 for in 구문처럼 뒤통수 칠 일은 없어야 할텐데...)<br>
+</p>
+
+<p>
+필터링 (ㅜㅜ)
+&nbsp;ㄴ for 표현식을 통해 컬렉션 순회 시 전체 컬렉션에서 일부만 사용하고 싶은 경우 사용<br/>
+&nbsp;ㄴ for 표현식에 필터(fileter)를 추가하면 가능하다.
+&nbsp;ㄴ 혹시 필터를 메소드로 뺄 수는 없을까? 조건이 많아지면 필터가 복잡해질 것 같은데...
+</p>
+
+<p>
+val files = (new java.io.File(".")).listFiles<br/>
+for (file <- files if file.getName.endsWith(".scala"))<br/>
+&#09;println(file)<br/>
+같은 목적의 코드<br/>
+for (file <- files) {<br/>
+&#09;if (file.getName.endsWith(".scala"))<br/>
+&#09;&#09;println(file)<br/>
+}<br/>
+</p>
+
+<p>
+여러 개의 필터 적용<br/>
+for(<br/>
+&#09;file <- files<br/>
+&#09;if file.isFile<br/>
+&#09;if file.getName.endsWith(".scala")<br/>
+) println(file)<br/>
+</p>
+
+<p>
+중첩 순회
+&nbsp;ㄴ 여러 개의 <- (제네레이터)절을 추가하면 중첩 루프를 작성할 수 있다.<br/>
+&nbsp;ㄴ 원한다면 괄호 대신 중괄호를 사용해 제네레이터와 필터를 감쌀 수 있다.<br/>
+</p>
+
+<p>
+for 중에 변수 바인딩하기</br>
+&nbsp;ㄴ 필터링 부분에 변수를 선언할 수도 있다. (이 때 변수 선언은 val이나 var를 생략해도 된다.)
+</p>
+
+<p>
+새로운 컬렉션 만들어내기 (for-yeild 표현식)
+&nbsp;ㄴ for 표현식의 반복 결과를 저장하기 위한 값을 만들어 리턴하고자 할 때 사용
+&nbsp;ㄴ for 표현식의 본문 앞에 yield라는 키워드를 사용하면 된다.
 </p>
