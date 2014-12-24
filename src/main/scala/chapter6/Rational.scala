@@ -7,6 +7,9 @@ object Rational {
   def main(args: Array[String]): Unit = {
     val x = new Rational(1, 3)
     println(x)
+
+    val y = new Rational(5, 0)
+    println(y)
   }
 }
 
