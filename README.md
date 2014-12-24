@@ -2,5 +2,4 @@ firstScalaExercise
 ==================
 
 My First Scala Exercise Sample Code
-
-Programming if Scala Example Code
+ - Programming in Scala Example Code
