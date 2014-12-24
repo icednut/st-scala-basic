@@ -134,7 +134,6 @@ n과 d가 클래스 내부에서 쓰이긴 했지만 생성자 내부에서만 �
 주 생성자(primary constructor)는 클래스의 유일한 진입점이다.<br/>
 </p>
 
-
 <p>
 override<br/>
 &nbsp;ㄴ 8장에서 다시 언급<br/>
@@ -143,19 +142,19 @@ override<br/>
 <p>
 require<br/>
 &nbsp;ㄴ 전제 조건을 만들 때 사용<br/>
-&nbsp;ㄴ require 메소드는 인자로 불리언 값을 하나 받는다. 이 값이 참(true)이면 require 문이 정상적으로 끝나고 다음으로 진행, 아니라면 IllegalArgumentException 발생
+&nbsp;ㄴ require 메소드는 인자로 불리언 값을 하나 받는다. 이 값이 참(true)이면 require 문이 정상적으로 끝나고 다음으로 진행, 아니라면 IllegalArgumentException 발생<br/>
 </p>
 
 <p>
-필드 추가
+필드 추가<br/>
 </p>
 
 <p>
-자기 참조
+자기 참조<br/>
 </p>
 
 <p>
-보조 생성자
+보조 생성자<br/>
 &nbsp;ㄴ 하나의 클래스에 여러 생성자가 필요한 경우 보조 생성자를 사용하자!<br/>
 &nbsp;ㄴ 스칼라에서는 주 생성자가 아닌 다른 생성자는 보조 생성자(auxiliary constructor)라고 부른다.<br/>
 &nbsp;ㄴ 스칼라에서 보조 생성자는 def this(...)로 시작한다.<br/>
@@ -163,26 +162,26 @@ require<br/>
 </p>
 
 <p>
-비공개 필드와 메소드
+비공개 필드와 메소드<br/>
 </p>
 
 <p>
-연산자 정의
-&nbsp;ㄴ 스칼라에서는 연산자도 메소드
-&nbsp;ㄴ 그러므로 클래스의 멤버로 연산자 메소드 추가가 가능
+연산자 정의<br/>
+&nbsp;ㄴ 스칼라에서는 연산자도 메소드<br/>
+&nbsp;ㄴ 그러므로 클래스의 멤버로 연산자 메소드 추가가 가능<br/>
 </p>
 
 <p>
-스칼라의 식별자
+스칼라의 식별자<br/>
 </p>
 
 <p>
-메소드 오버로드
-&nbsp;ㄴ 이 부분은 java와 비슷한 것 같다.
+메소드 오버로드<br/>
+&nbsp;ㄴ 이 부분은 java와 비슷한 것 같다.<br/>
 </p>
 
 <p>
-암시적 타입 변환
-&nbsp;ㄴ implicit def intoRational(x: Int) = new Rational(x)
-&nbsp;ㄴ 가능하면 21장에서 다루는 다른 암시 기법을 활용하는 것이 좋다.
+암시적 타입 변환<br/>
+&nbsp;ㄴ implicit def intoRational(x: Int) = new Rational(x)<br/>
+&nbsp;ㄴ 가능하면 21장에서 다루는 다른 암시 기법을 활용하는 것이 좋다.<br/>
 </p>
