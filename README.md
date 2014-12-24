@@ -129,7 +129,9 @@ class Rational(n: Int, d: Int) {<br/>
 </p>
 
 <p>
-스칼라 컴파일러는 println을 호출하는 위 코드를 Rational 클래스의 주 생성자에 넣는다.<br/>
+스칼라 컴파일러는 println을 호출하는 위 코드를 Rational 클래스의 주 생성자(primary constructor)에 넣는다.<br/>
+n과 d가 클래스 내부에서 쓰이긴 했지만 생성자 내부에서만 쓰이는 경우 스칼라 컴파일러는 그들에 해당하는 필드를 생성하지 않는다.<br/>
+주 생성자(primary constructor)는 클래스의 유일한 진입점이다.<br/>
 </p>
 
 
@@ -142,4 +144,45 @@ override<br/>
 require<br/>
 &nbsp;ㄴ 전제 조건을 만들 때 사용<br/>
 &nbsp;ㄴ require 메소드는 인자로 불리언 값을 하나 받는다. 이 값이 참(true)이면 require 문이 정상적으로 끝나고 다음으로 진행, 아니라면 IllegalArgumentException 발생
+</p>
+
+<p>
+필드 추가
+</p>
+
+<p>
+자기 참조
+</p>
+
+<p>
+보조 생성자
+&nbsp;ㄴ 하나의 클래스에 여러 생성자가 필요한 경우 보조 생성자를 사용하자!<br/>
+&nbsp;ㄴ 스칼라에서는 주 생성자가 아닌 다른 생성자는 보조 생성자(auxiliary constructor)라고 부른다.<br/>
+&nbsp;ㄴ 스칼라에서 보조 생성자는 def this(...)로 시작한다.<br/>
+&nbsp;ㄴ 스칼라에서 모든 보조 생성자는 반드시 같은 클래스에 속한 다른 생성자를 호출하는 코드로 시작해야 한다. (모든 보조 생성자의 첫 구문은 this(...)여야 한다.)<br/>
+</p>
+
+<p>
+비공개 필드와 메소드
+</p>
+
+<p>
+연산자 정의
+&nbsp;ㄴ 스칼라에서는 연산자도 메소드
+&nbsp;ㄴ 그러므로 클래스의 멤버로 연산자 메소드 추가가 가능
+</p>
+
+<p>
+스칼라의 식별자
+</p>
+
+<p>
+메소드 오버로드
+&nbsp;ㄴ 이 부분은 java와 비슷한 것 같다.
+</p>
+
+<p>
+암시적 타입 변환
+&nbsp;ㄴ implicit def intoRational(x: Int) = new Rational(x)
+&nbsp;ㄴ 가능하면 21장에서 다루는 다른 암시 기법을 활용하는 것이 좋다.
 </p>
