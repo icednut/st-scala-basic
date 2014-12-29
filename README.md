@@ -5,7 +5,7 @@
  ㄴ 콘즈 연산자의 호출 대상 객체는 콜론(:) 바로 뒤의 객체이다.
 
 리스트 뒤에 원소를 추가하는 효율적인 방법
- ㄴ 리스트를 뒤집는다 (reverse) -> 콘즈 연산자로 맨 앞에 요소 추가 -> 다시 뒤집는다.
+ ㄴ 리스트를 뒤집는다 (reverse) -&gt; 콘즈 연산자로 맨 앞에 요소 추가 -&gt; 다시 뒤집는다.
  ㄴ 이렇게 하는 이유: 리스트 뒤에 원소를 추가하는 연산은 리스트의 길이에 비례한 시간이 걸리기 때문, 반면 콘즈 연산자는 상수 시간이 걸린다.
 
 튜플
@@ -135,7 +135,6 @@ require
 7장. 내장 제어 구문
 ===================
 <pre>
-<![CDATA[
 - 스칼라가 제공하는 내장 제어구문: if, while, for, try, match, function call
 - 스칼라의 제어 구문 수가 적은 이유는 설계 초기 함수 리터럴을 포함했기 때문, 제어 구문 위에 다른 제어 구문을 하나하나 추가하기 보다는, 라이브러리에 제어 구문을 추가하는 편을 택함
 - 스칼라의 제어구문은 대부분 어떤 값을 결과로 내놓는다. 이는 프로그램 전체를 값을 계산하는 관점에서 바라보고, 프로그램 구성요소 또한 값을 도출해야 한다는 함수 언어적 접근을 채용한 결과다.
@@ -170,14 +169,14 @@ for 표현식
  ㄴ 스칼라의 for 표현식은 반복 처리를 위한 스위스 군용 만능 칼이라 할 수 있다. (맥가이버 칼이라고 쓰면 뭐라 할까봐 이렇게 표현한건가...-_-)
 
 val files = (new java.io.File(".")).listFiles
-for (file <- files)
+for (file &lt;- files)
     println(file)
 
-for (i <- 1 to 4)
+for (i &lt;- 1 to 4)
     println(i)
 // 1, 2, 3, 4
 
-for (i <- 1 until 4)
+for (i &lt;- 1 until 4)
     println(i)
 // 1, 2, 3
 
@@ -192,17 +191,17 @@ for (i <- 1 until 4)
  ㄴ 혹시 필터를 메소드로 뺄 수는 없을까? 조건이 많아지면 필터가 복잡해질 것 같은데...
 
 val files = (new java.io.File(".")).listFiles
-for (file <- files if file.getName.endsWith(".scala"))
+for (file &lt;- files if file.getName.endsWith(".scala"))
      println(file)
 
 // 같은 목적의 코드
-for (file <- files) {
+for (file &lt;- files) {
      if (file.getName.endsWith(".scala"))
          println(file)
 }
 
 여러 개의 필터 적용
-for(file <- files
+for(file &lt;- files
    if file.isFile
    if file.getName.endsWith(".scala")
 ) println(file)
@@ -217,7 +216,6 @@ for 중에 변수 바인딩하기
 새로운 컬렉션 만들어내기 (for-yeild 표현식)
  ㄴ for 표현식의 반복 결과를 저장하기 위한 값을 만들어 리턴하고자 할 때 사용
  ㄴ for 표현식의 본문 앞에 yield라는 키워드를 사용하면 된다.
-]]>
 </pre>
 
 
@@ -229,19 +227,19 @@ for 중에 변수 바인딩하기
 1급 계층 함수 (first class function)
  ㄴ 함수를 정의하고 호출할 뿐만 아니라, 이름 없이 리터럴로 표기해 값처럼 주고 받을 수 있다. (함수 값은 객체)
  ㄴ 함수 리터럴의 본문에 둘 이상의 문장이 필요하다면 본문을 중괄호로 감싸서 블록으로 만든다.
- ㄴ (x: Int) => x + 1
- ㄴ => 기호는 왼쪽의 내용(x)을 오른쪽의 내용(x + 1)으로 변환하는 함수라는 표시. (위 코드는 정수 x를 x + 1로 매핑하는 함수를 의미)
+ ㄴ (x: Int) =&gt; x + 1
+ ㄴ =&gt; 기호는 왼쪽의 내용(x)을 오른쪽의 내용(x + 1)으로 변환하는 함수라는 표시. (위 코드는 정수 x를 x + 1로 매핑하는 함수를 의미)
  
 타깃 타이핑(target typing)
  ㄴ 함수 리터럴을 좀 더 간단하게 만든느 방법은 함수 리터럴의 인자 타입을 제거하는 것이다.
  ㄴ 스칼라 컴파일러가 컴파일 타임에 인자 타입을 아는 것을 말한다.
  ㄴ 타입 추론으로 인하여 인자를 둘러싼 괄호도 생략할 수 있다.
- ㄴ x => x + 1
+ ㄴ x =&gt; x + 1
 
 위치 표시자 (_)
  ㄴ 함수 리터럴의 파라미터에 대한 위치 표시자를 사용할 수 있다.
  ㄴ 밑줄을 '채워넣어야 할 빈칸'으로 생각해도 좋다.
- ㄴ 함수 리터럴 _ > 0은 좀 더 긴 표현 방법인 x => x > 0과 같다.
+ ㄴ 함수 리터럴 _ > 0은 좀 더 긴 표현 방법인 x =&gt; x > 0과 같다.
  
 부분 적용한 함수 (partially applied function)
  ㄴ 스칼라에서는 함수를 호출하면서 필요한 어떤 인자를 전달하는 것을 함수를 해당 인자에 적용한다(apply)고 말한다.
@@ -253,20 +251,20 @@ for 중에 변수 바인딩하기
   someNumbers.foreach(println)
   
 클로저
- (x: Int) => x + more
+ (x: Int) =&gt; x + more
  ㄴ more는 자유 변수(free variable)
  ㄴ x는 바운드 변수(bound variable)
  ㄴ 주어진 함수 리터럴로부터 실행 시점에 만들어낸 객체인 함수 값(객체)을 클로저(closure)라고 부른다.
  ㄴ 클로저라는 이름은 함수 리터럴의 본문에 있는 모든 자유 변수에 대한 바인딩(binding, 변수 이름과 스코프상에서 실제 값 또는 변수 위치 등에 대한 연결)을 '포획capturing'해서 자유 변수가 없게 '닫는closing' 행위에서 따온 말이다.
 
-(x: Int) => x + 1과 같이 자유 변수가 없는 함수 리터럴을 닫힌 코드 조각 (closed term)
+(x: Int) =&gt; x + 1과 같이 자유 변수가 없는 함수 리터럴을 닫힌 코드 조각 (closed term)
  ㄴ 닫힌 함수 리터럴에서 실행 시점에 생긴 함수 값은 엄밀히 말해 클로저가 아니다.
-(x: Int) => x + more처럼 자유 변수가 있는 함수 리터럴은 열린 코드 조각 (open term)
+(x: Int) =&gt; x + more처럼 자유 변수가 있는 함수 리터럴은 열린 코드 조각 (open term)
  ㄴ 위 함수 리터럴을 가지고 실행 시점에 만들어내는 함수 값은 정의에 따라 자유 변수인 more의 바인딩을 포획해야 한다.
  ㄴ 그렇게 해서 만들어진 함수 값에는 포획한 more 변수에 대한 참조가 들어 있기 떄문에, 클로저라 부른다.
  
 var more = 1
-val addMore = (x: Int) => x + more
+val addMore = (x: Int) =&gt; x + more
 addMore(10) // 11
 
 more = 9999
@@ -281,7 +279,7 @@ someNumbers.foreach(sum += _) // 외부 스코프에 있는 sum 변수에 접근
 println sum // -11
 
 반복 파라미터
- ㄴ def echo(args: String*) = for (arg <- args) println(arg)
+ ㄴ def echo(args: String*) = for (arg &lt;- args) println(arg)
  ㄴ echo(), echo("one"), echo("hello", "world!")
  ㄴ echo(array: _*) // 배열을 전달하기 위해서는 _* 기호를 추가
 이름 붙인 인자
