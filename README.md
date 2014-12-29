@@ -23,8 +23,6 @@
 val, 변경 불가능한 객체, 부수 효과가 없는 메소드를 더 많이 사용하라. 먼저 그런 접근 방법을 먼저 시도해보라. var나 변경 가능 객체나 부수 효과가 있는 메소드를 사용해야 할 구체적인 필요성이 있고 그런 이유를 정당화할 수 있는 경우에만 var, 변경 가능성, 부수 효과를 활용하라.
 </pre>
 
-
-
 4장. 클래스와 객체
 ==================
 <pre>
@@ -131,7 +129,6 @@ require
  ㄴ 가능하면 21장에서 다루는 다른 암시 기법을 활용하는 것이 좋다.
 </pre>
 
-
 7장. 내장 제어 구문
 ===================
 <pre>
@@ -218,7 +215,6 @@ for 중에 변수 바인딩하기
  ㄴ for 표현식의 본문 앞에 yield라는 키워드를 사용하면 된다.
 </pre>
 
-
 8장. 함수와 클로저
 ===================
 <pre style="word-wrap: break-word">
@@ -288,4 +284,40 @@ println sum // -11
 디폴트 인자
  ㄴ c++의 디폴트 파라미터와 비슷
 꼬리 재귀
+</pre>
+
+9장. 흐름 제어 추상화
+===================
+<pre>
+파라미터로 전달받은 함수 값을 통해 함수 안에서 함수값을 실행할 수 있다.
+
+object FileMatcher {
+     private def filesHere = (new java.io.File(".")).listFiles
+     
+     def fileMatching(query: String, matcher: (String, String) => Boolean) = {
+          for (file <- filesHere; if matcher(file.getName, query)) yield file
+     }
+     
+     def filesEnding(query: String) = filesMatching(query, (fileName: String, query: String) => fileName.endsWith(query))
+     def filesContaining(query: String) = filesMatching(query, _.contains(_))
+     def filesRegex(query: String) = filesMatching(query, _.matches(_))
+}
+
+여기서 matcher는 함수이기 때문에 =&gt;가 타입에 있어야 하고 인자로 문자열을 받으며 리턴값은 불리언 값을 내어놓는다.
+따라서 이 함수의 타입은 (String, String) => Boolean 이다.
+
+object FileMatcher {
+     private def filesHere = (new java.io.File(".")).listFiles
+     
+     def fileMatching(query: String, matcher: (String, String) => Boolean) = {
+          for (file <- filesHere; if matcher(file.getName, query)) yield file
+     }
+     
+     def filesEnding(query: String) = filesMatching(_.endsWith(query))
+     def filesContaining(query: String) = filesMatching(_.contains(query))
+     def filesRegex(query: String) = filesMatching(_.matches(query))
+}
+
+그리고 호출하는 함수들(filesEnding, filesContaining, filesRegex)에서는 query 문자열이라는 자유 변수를 갖고 있기 때문에
+굳이 여러 번 주고 받을 필요가 없다.
 </pre>
